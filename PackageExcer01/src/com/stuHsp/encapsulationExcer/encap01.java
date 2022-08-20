@@ -20,6 +20,7 @@ public class encap01 {
         person.setSalary(8000);
         System.out.println("姓名: " + person.getName());
         System.out.println(person.info());
+
         System.out.println("========joJo的构造器身份验证===========");
         //如果用构造器进行四种访问修饰符的赋值，赋值时必须经过验证的业务逻辑的方法
         Person joJo = new Person("JoJo", 2000,50000 );
