@@ -2,7 +2,7 @@ package com.stuHsp.extend_.impove_;
 
 import com.stuHsp.extend_.Graduate;
 import com.stuHsp.extend_.Pupil;
-
+//此为最终汇总，打印类
 public class Extends01 {
     public static void main(String[] args){
         com.stuHsp.extend_.Pupil pupil = new Pupil();

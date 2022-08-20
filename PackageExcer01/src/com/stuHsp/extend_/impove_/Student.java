@@ -1,5 +1,5 @@
 package com.stuHsp.extend_.impove_;
-
+//这是Pupil 和 Graduate 的父类
 public class Student {
     //属性父类
     public int age;
