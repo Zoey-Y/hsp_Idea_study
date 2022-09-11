@@ -15,7 +15,18 @@ public class PolyArr {
         people[4] = new Teacher("sadsx",45,"Webssa");
 
         for (int i = 0;i < people.length;i++){
-            people[i].say();//循环每个父类、子类的say()
+            System.out.println(people[i].say());//循环每个父类、子类的say(),遵循动态绑定规则(子类与父类之间的方法具有继承关系)
+            if(people[i] instanceof Teacher){//instanceof是判断people[i]的运行类型是否为Teacher类型的类型或者子类型
+                //子类与父类间不存在继承状态，调用子类的方法就向下转型
+                //第一种写法
+                Teacher teacher = (Teacher) people[i];
+                System.out.println(teacher.Salary());
+                //第二种写法：((Teacher) people[i]).Salary;
+            }else if(people[i] instanceof Student){
+                Student student = (Student) people[i];
+                System.out.println(student.Study());
+                //第二种写法：((Student) people[i]).Study();
+            }
         }
     }
 }

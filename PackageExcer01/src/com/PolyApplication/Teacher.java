@@ -16,8 +16,11 @@ public class Teacher extends Person{
         this.teach = teach;
     }
    //重写say方法
-    public void say(){
-        super.say();
-        System.out.println(getName() + "老师是教:" + getTeach());
+    public String say(){
+        return super.say() + getName() + "  老师是教:" + getTeach();
+    }
+    //Teacher的特有方法Salary
+    public String Salary(){
+        return getName() + "老师的薪水有" + "24000";
     }
 }

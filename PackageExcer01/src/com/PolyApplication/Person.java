@@ -25,7 +25,7 @@ public class Person {
         this.age = age;
     }
 
-    public void say(){
-        System.out.println( "姓名：" + getName() + "年龄：" + getAge());
+    public String say(){
+        return "姓名：" + getName() + "  年龄：" + getAge();
     }
 }
