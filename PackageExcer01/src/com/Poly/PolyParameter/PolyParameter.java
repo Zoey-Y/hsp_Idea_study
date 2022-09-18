@@ -4,6 +4,13 @@ import java.util.Optional;
 
 public class PolyParameter {
     public static void main(String[] args){
+        /*Method 1：动态绑定机制的写法(直接创建对象来调用相关消息)
+         * OEmployee Jasx = new OEmployee("Jasx",5000);
+         * PolyParameter polyParameter = new PolyParameter();
+         * polyParameter.showEmpAnnual(Jasx);
+         * */
+
+        /*Method 2：(通过创建父类的数组，用父类的数组接收子类的相关内容)*/
         Employee[] employees = new Employee[3];
         //向上转型
         employees[0] = new OEmployee("Jasx",5000);
@@ -29,6 +36,10 @@ public class PolyParameter {
     public void testWork(Employee e){//调用父类
             if(e instanceof OEmployee){//若父类像行转型与子类型相等
                 ((OEmployee) e).work();//父类就向下转型调用子类的work()
+                /*第二种写法:
+                  OEmployee worker = (OEmployee) e;
+                worker.work();
+               */
             }else if(e instanceof Manager){
                 ((Manager) e).manage();
             }
