@@ -18,7 +18,15 @@ package com.SmallChange;
  *       2.2 可以使用对象
  *       2.3 简单的话就用String拼接
  * 3.完成收益入账
- * 4.完成消费*/
+ * 4.完成消费
+ *弊端：此书写方式将功能都封装到一个方法内，以后迭代指能在这个方法内的某一些功能进行迭代，而且要一个个找非常麻烦
+ *      所以用oop的方法能够很好的解决这一问题，并且只要调用方法 或者 类就可以让别人使用、修改、迭代该项目的某一些功能
+ * 零钱通改进：
+ *      1.在收益入账 和 消费时，判断金额是否合理，并给出相应的提示
+ *      2.将面向向的过程的代码修改成面向对象的方法，
+ *      编写SmallChangeSysOOP.java类，并使用SmallChangeSysApp.java完成测试
+ * */
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
@@ -26,7 +34,7 @@ import java.util.Scanner;
 public class SmallChangeBase01 {
 
     public static void main(String[] args){
-        //1.一般菜单至少执行一次
+        //1.是否显示菜单
         boolean loop = true;
         String choice;//选择数字的按钮
         Scanner input = new Scanner(System.in);
@@ -57,10 +65,14 @@ public class SmallChangeBase01 {
                     System.out.println(Details);
                     break;
                 case "2":
-                    System.out.print("收益入账");
+                    System.out.print("输入收益入账金额");
                     money = input.nextDouble();//输入入账的钱数
                     //money校验---等等写
-
+                        //找出不正确的金额条件,然后给出提示，直接break
+                    if(money <= 0){//这里找出不正确的条件，相当于设置关卡
+                        System.out.println("收益入账金额不能小于等于0");
+                        break;
+                    }
                     balance += money;
                     //获取date值
                     date = new Date();
@@ -71,7 +83,10 @@ public class SmallChangeBase01 {
                     System.out.print("消费金额");
                     money = input.nextDouble();
                     //money值的范围校验
-
+                    if(money <= 0 || money > balance){
+                        System.out.println("消费金额不能小于等于0，并且余额要足够花销哦");
+                        break;
+                    }
                     
                     balance -= money;
                     System.out.print("消费的说明");
@@ -114,10 +129,9 @@ public class SmallChangeBase01 {
                     //模块2：跳出之后，则得判断输入的是y还是n
                     if(choice2.equals("y")){
                         loop = false;
-                        break;
-                    }else {
-                        break;
                     }
+                        break;
+
 
                 default:
                     System.out.println("输入错误...");
