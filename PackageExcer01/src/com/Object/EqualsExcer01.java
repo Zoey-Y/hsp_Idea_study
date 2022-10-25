@@ -54,14 +54,14 @@ public class EqualsExcer01 {
 
         //重写一个Object 的equals方法使其能够比较对象的属性值
         public boolean equals(Object obj) {//因为重写函数名，参数都得一样
-            //this是当前类Person1，Object是Person2
+            //this是当前类Person，Object是Person2
             if (this == obj) {//若俩对象相同， 则直接返回真
-                return true;
+                return true;//若传进来的对象是Person，那么this==Person直接返回true
             }
-            //传参类型的判断
+            //判断传进来的是不是Person对象
             if (obj instanceof Person) {//如果equals()方法传参进来的参数是Person才比较
                 //向下转型(原因：为了获取传进来对象的属性值)
-                Person p = (Person) obj;//让原本为Object父类对象转成Person子类对象以此获得传进来的对象属性值
+                Person p = (Person) obj;//让原本为Object父类对象转成Person子类对象,以此获得传进来的对象属性值
                 return this.name.equals(p.name) && this.age == p.age && this.gender == p.gender;
             }
                 return false;//没必要if..else
