@@ -1,6 +1,6 @@
 # 十二、HomeWork	 & 	Chapter08 
 
-## 一、Home:
+## 一、Home: <toString用法、构造器...>
 
 ### HomeWork01
 
@@ -122,9 +122,9 @@ public class AgeSort {//年龄排序
 
 ~~~
 
-## 二、Home
+## 二、Home <权限总结>
 
-### HomeWork02
+### HomeWork02 
 
 ~~~java
 package com.HomeWorkChapter08.Home02;
@@ -140,7 +140,7 @@ public class HomeWork02 {
 
 ~~~
 
-## 三、Home
+## 三、Home <继承、重写、构造器>
 
 ### HomeWork03
 
@@ -310,7 +310,7 @@ public class Instructor extends Teacher{
 }
 ```
 
-## 四、Home
+## 四、Home <继承的实例>
 
 ### HomeWork04
 
@@ -496,7 +496,7 @@ public class OdStaff extends Staff{
 }
 ```
 
-## 五、Home
+## 五、Home <继承的实例>
 
 ### HomeWork05
 
@@ -755,7 +755,7 @@ public class Worker extends Staff02{
 }
 ```
 
-## 六、Home
+## 六、Home <super的用法>
 
 ### HomeWork06
 
@@ -796,7 +796,7 @@ class Son extends Father{
 }
 ```
 
-## 七、Home
+## 七、Home <多态的实例>
 
 ### HomeWork07
 
@@ -841,3 +841,363 @@ class Demo extends Test{
 
 }
 ```
+
+## 八、Home
+
+### HomeWork08
+
+~~~java
+package com.HomeWorkChapter08.Home08;
+
+public class HomeWork08 {
+    public static void main(String[] args){
+//        CheckingAccount checkingAccount = new CheckingAccount(1000);//假设原本有1000块余额
+//        checkingAccount.deposit(10);//存储10块钱，1块钱手续费 1000+(10-1)= 1009
+//        checkingAccount.withdraw(9);//取款9块钱，1块手续费 1009 - (9+1) = 999
+//        System.out.println("余额为:"+checkingAccount.getBalance());
+
+        //月初，计时器自动调用earnMonthlyInterest()
+        SavingAccount savingAccount = new SavingAccount(1000);
+        savingAccount.deposit(100);
+        savingAccount.deposit(100);
+        savingAccount.deposit(100);//1300
+        System.out.println("余额为："+savingAccount.getBalance());
+        savingAccount.deposit(100);//1399
+        System.out.println("算手续费后的余额："+savingAccount.getBalance());
+        //余额初的重置和利息的结算
+        savingAccount.earnMonthlyInterest();
+        savingAccount.deposit(100);
+        System.out.println("新的月份存款后的余额："+savingAccount.getBalance());//1399+100=1499 + (1499*0.01)
+    }
+}
+
+~~~
+
+
+
+### 父类：BankAccount
+
+~~~java
+package com.HomeWorkChapter08.Home08;
+/*要求：
+*   1.在上面类的基础上扩展 新类CheckingAccount
+*   对每次存款和取款都收取1美元的手续费
+*   2.扩展前一个练习的BankAccount类，新类SavingAccount
+*   每个月都会有利息产生(earnMonthlyInterest方法被调用)
+*   并且有每月三次免手续费的存款或取款，
+*   在earnMonthlyInterest方法中重置交易计数*/
+public class BankAccount {//父类
+    private double balance;//零钱
+    public  BankAccount(double initialBalance){//原来零钱的余额
+        this.balance = initialBalance;
+    }
+    //存款
+    public  void deposit(double amount){
+        balance += amount;
+    }
+    //取款
+    public void withdraw(double amount){
+        balance -= amount;
+    }
+
+    public double getBalance() {//get方法来查看
+        return balance;
+    }
+
+    public void setBalance(double balance) {//可以调用set方法修改
+        this.balance = balance;
+    }
+}
+
+
+~~~
+
+### CheckingAccount
+
+~~~java
+package com.HomeWorkChapter08.Home08;
+ /*1.在上面类的基础上扩展 新类CheckingAccount
+    对每次存款和取款都收取1美元的手续费*/
+public class CheckingAccount extends BankAccount{
+   double charge = 1;//手续费
+   public CheckingAccount(double initialBalance) {//初始余额
+     super(initialBalance);
+    }
+   //存款---------charge：1块钱手续费
+    @Override
+    public void deposit(double amount) {
+     super.deposit(amount - charge);
+    }
+   //取款
+    @Override
+    public void withdraw(double amount ) {
+     super.withdraw(amount + charge);//这里是取钱要取的不变要多取1块钱作为手续费
+    }
+
+   }
+
+~~~
+
+### SavingAccount
+
+~~~java
+package com.HomeWorkChapter08.Home08;
+/*2.扩展前一个练习的BankAccount类，新类SavingAccount
+ *   每个月都会有利息产生(earnMonthlyInterest方法被调用)
+ *   并且有每月三次免手续费的存款或取款，
+ *   在earnMonthlyInterest方法中重置交易计数*/
+public class SavingAccount extends BankAccount{
+    private int count = 3;//免手续费的次数
+    private double rate = 0.01;//利息
+    private int charge = 1;//手续费
+    public SavingAccount(double initialBalance){
+        super(initialBalance);
+    }
+    //存款
+    @Override
+    public void deposit(double amount) {
+       if (count > 0){
+           super.deposit(amount);
+       }else{
+           super.deposit(amount - charge);
+       }
+        count--;
+    }
+
+    //取款
+    @Override
+    public void withdraw(double amount) {
+        if(count > 3){
+            super.withdraw(amount);
+        }else{
+            super.withdraw(amount + charge);
+        }
+        count--;
+    }
+
+    public void earnMonthlyInterest(){//(1)每个月免利息的次数重置为3，(2)统计上个月的利息
+        count = 3;
+        super.deposit(getBalance()*rate);//利息 = 余额 * 利率
+    }
+}
+
+~~~
+
+## 九、Home <构造器>
+
+### HomeWork09
+
+~~~java
+package com.HomeWorkChapter08.Home09;
+/*设计一个Point类,其x,y坐标可以通过构造器提供.
+ * 提供一个子类LabeledPoint,其构造器接受一个标签值y,x坐标
+ * 比如: new LabeledPoint("Black",1929,230.07),
+ * 写出对应的构造器即可.*/
+public class HomeWork09 {
+    public static void main(String[] args){
+        LabeledPoint labeledPoint = new LabeledPoint("Black",1929,230.07);
+        System.out.println("构造器的名字和坐标："+"\""+labeledPoint.getName()+"\""+
+                ","+labeledPoint.getX()+","+labeledPoint.getY());
+    }
+}
+
+~~~
+
+### 父类Point
+
+~~~java
+package com.HomeWorkChapter08.Home09;
+/*设计一个Point类,其x,y坐标可以通过构造器提供.
+* 提供一个子类LabeledPoint,其构造器接受一个标签值y,x坐标
+* 比如: new LabeledPoint("Black",1929,230.07),
+* 写出对应的构造器即可.*/
+public class Point {
+    private int x;
+    private double y;
+
+
+    public Point(int x, double y) {
+        this.x = x;
+        this.y = y;
+
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+}
+
+~~~
+
+### LabeledPoint
+
+~~~java
+package com.HomeWorkChapter08.Home09;
+/*提供一个子类LabeledPoint,其构造器接受一个标签值y,x坐标
+ * 比如: new LabeledPoint("Black",1929,230.07)*/
+public class LabeledPoint extends Point{
+    private String name;
+    public LabeledPoint(String name,int x, double y ) {
+        super(x, y);
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+~~~
+
+## Home10 <equals()重写>
+
+### HomeWork10
+
+~~~java
+package com.HomeWorkChapter08.Home10;
+/*编写一个Doctor类(name,age,job,gender,sal)
+ * 具有相应的setter和getter方法，五个参数的构造器，
+ * 重写父类的equals(),
+ * 方法：public boolean equals(Object obj),
+ * 并判断测试类中创建的两个对象是否相等。(就是判断属性是否相等)
+ * */
+public class HomeWork10 {
+    public static void main(String[] args){
+        Doctor Alax = new Doctor("Alax",23,"医学博士",'男',12345);
+        Doctor Alin = new Doctor("Alin", 22, "Programmer", '男', 100000);
+        Doctor Alin2 = new Doctor("Alin", 22, "Programmer", '男', 100000);
+        System.out.println(Alax.equals(Alin));//false
+        System.out.println(Alin.equals(Alin2));//ture
+    }
+}
+
+~~~
+
+### Doctor
+
+~~~java
+package com.HomeWorkChapter08.Home10;
+
+import java.util.Objects;
+
+/*编写一个Doctor类(name,age,job,gender,sal)
+* 具有相应的setter和getter方法，五个参数的构造器，
+* 重写父类的equals(),
+* 方法：public boolean equals(Object obj),
+* 并判断测试类中创建的两个对象是否相等。(就是判断属性是否相等)
+* */
+public class Doctor {
+    private String name;
+    private int age;
+    private String job;
+    private char gender;
+    private double sal;
+
+    public Doctor(String name, int age, String job, char gender, double sal) {
+        this.name = name;
+        this.age = age;
+        this.job = job;
+        this.gender = gender;
+        this.sal = sal;
+    }
+     public boolean  equals(Object obj){//重写父类中的equals方法
+        if(this == obj)//this:本类的地址 == 传参的地址  (也就是)
+            return true;
+        //instanceof比较的是运行类型
+        if (obj instanceof Doctor){//若obj是一个Doctor对象的话就进入
+            Doctor d = (Doctor) obj;//向下转型(多态的内容)
+           /* return this.name.equals(d.name) && this.age == d.age &&
+                    this.job.equals(d.job) && this.gender == d.gender
+                    && this.sal == d.sal;*/
+
+        }
+        return false;//若obj不是Doctor就直接返回false
+     }
+
+ /*   @Override
+    public String toString() {
+        return "Doctor{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", job='" + job + '\'' +
+                ", gender=" + gender +
+                ", sal=" + sal +
+                '}';
+    }*/
+
+    /* @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Doctor doctor = (Doctor) o;
+            return age == doctor.age &&
+                    gender == doctor.gender &&
+                    Double.compare(doctor.sal, sal) == 0 &&
+                    Objects.equals(name, doctor.name) &&
+                    Objects.equals(job, doctor.job);
+        }
+    */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age, job, gender, sal);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public char getGender() {
+        return gender;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+
+    public double getSal() {
+        return sal;
+    }
+
+    public void setSal(double sal) {
+        this.sal = sal;
+    }
+}
+
+~~~
+

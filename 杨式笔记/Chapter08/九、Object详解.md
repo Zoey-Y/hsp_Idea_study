@@ -44,7 +44,7 @@ class A extends B{}
 
 ## 二、equals方法：
 
-* ### equals：是Object类中的方法 (只能) 判断 (引用类型)（判断两个对象是否相等）
+* ### equals：是Object类中的方法, (只能) 判断 (引用类型)、(判断两个对象是否相等）
 
 * ### 默认判断的是  (地址)  是否相等，子类中往往重写该方法，用于判断内容是否相等（要判断值是否相同，必须重写一下equals方法）；例如：Integer,String
 
@@ -65,7 +65,7 @@ public class EqualsExcer01 {
         System.out.println(person1.equals(person2));
         /*第一种情况：(没有在Person类中重写equals方法的情况)
          *   此时(用equals)默认比较的是两个对象的地址值,因此此时为不同地址，所以为false
-         * 第二种情况:(在Person类中重写了一个equals方法的情况)
+         * 第二种情况:(在Person类中重写了一个equals方法的情况,此时就是判断两者对象是否相同)
          * */
 
     }
@@ -111,7 +111,7 @@ public class EqualsExcer01 {
             if (this == obj) {//若俩对象相同， 则直接返回真
                 return true;
             }
-            //传参类型的判断
+            //判断传进来的是不是Person对象
             if (obj instanceof Person) {//如果equals()方法传参进来的参数是Person才比较
                 //向下转型(原因：为了获取传进来对象的属性值)
                 Person p = (Person) obj;//让原本为Object父类对象转成Person子类对象以此获得传进来的对象属性值
