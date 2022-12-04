@@ -8,16 +8,15 @@ public class final01 {
         e.TAX_RATE = 1;*/
          System.out.println(BBB.n);
         /*BBB bbb = new BBB();*/
+
     }
 }
-/*
-class fianl A{//希望A类不被任何的类继承，可以用fianl
+/*final class  A{//希望A类不被任何的类继承，可以用final
 
 }
 class B extends A{
 
-}
-*/
+}*/
 /*class C{
     //若要求hi()不能被重写,可以用final
     public final void hi(){}
